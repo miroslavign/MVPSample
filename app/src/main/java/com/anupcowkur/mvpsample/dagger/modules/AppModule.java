@@ -1,19 +1,35 @@
 package com.anupcowkur.mvpsample.dagger.modules;
 
-import com.anupcowkur.mvpsample.model.PostsAPI;
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-import javax.inject.Singleton;
+import com.anupcowkur.mvpsample.dagger.scopes.MvpSampleApplicationScope;
+import com.anupcowkur.mvpsample.ui.presenters.MainPresenter;
 
 import dagger.Module;
 import dagger.Provides;
 
-@Module
+@Module(includes = ContextModule.class)
 public class AppModule {
 
+    private Application application;
+
+    public AppModule(Application application) {
+        this.application = application;
+    }
+
+    @MvpSampleApplicationScope
     @Provides
-    @Singleton
-    PostsAPI providePostsApi() {
-        return new PostsAPI();
+    MainPresenter providesMainPresenter() {
+        return new MainPresenter();
+    }
+
+    @MvpSampleApplicationScope
+    @Provides
+    SharedPreferences providesSharedPreferences(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
 }

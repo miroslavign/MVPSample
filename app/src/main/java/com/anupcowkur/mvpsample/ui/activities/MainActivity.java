@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.anupcowkur.mvpsample.MvpSampleApplication;
 import com.anupcowkur.mvpsample.R;
-import com.anupcowkur.mvpsample.dagger.DaggerInjector;
 import com.anupcowkur.mvpsample.ui.presenters.MainPresenter;
 import com.anupcowkur.mvpsample.ui.screen_contracts.MainScreen;
 
@@ -22,10 +22,8 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-
-        DaggerInjector.get().inject(this);
+        ((MvpSampleApplication)getApplication()).getComponent().inject(this);
         ButterKnife.bind(this);
     }
 

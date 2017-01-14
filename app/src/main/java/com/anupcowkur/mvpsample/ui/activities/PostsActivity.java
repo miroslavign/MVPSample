@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.anupcowkur.mvpsample.MvpSampleApplication;
 import com.anupcowkur.mvpsample.R;
-import com.anupcowkur.mvpsample.dagger.DaggerInjector;
 import com.anupcowkur.mvpsample.events.ErrorEvent;
 import com.anupcowkur.mvpsample.events.NewPostsEvent;
 import com.anupcowkur.mvpsample.ui.adapters.PostsListAdapter;
@@ -45,7 +45,7 @@ public class PostsActivity extends AppCompatActivity implements PostsScreen {
 
         setContentView(R.layout.activity_posts);
 
-        DaggerInjector.get().inject(this);
+        ((MvpSampleApplication)getApplication()).getComponent().inject(this);
         ButterKnife.bind(this);
 
         initRecyclerView();

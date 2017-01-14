@@ -2,29 +2,33 @@ package com.anupcowkur.mvpsample.ui.presenters;
 
 import com.anupcowkur.mvpsample.events.ErrorEvent;
 import com.anupcowkur.mvpsample.events.NewPostsEvent;
-import com.anupcowkur.mvpsample.model.PostsAPI;
+import com.anupcowkur.mvpsample.model.ApiEndpointService;
 import com.anupcowkur.mvpsample.model.pojo.Post;
 
 import org.greenrobot.eventbus.EventBus;
 
-import javax.inject.Inject;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class PostsPresenter {
-    PostsAPI postsAPI;
+
+    ApiEndpointService apiEndpointService;
 
     @Inject
-    public PostsPresenter(PostsAPI postsAPI) {
-        this.postsAPI = postsAPI;
+    PostsPresenter(ApiEndpointService apiEndpointService) {
+        this.apiEndpointService = apiEndpointService;
     }
 
     public void loadPostsFromAPI() {
-        postsAPI.getPostsObservable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers
-                                                                                     .mainThread())
+
+        apiEndpointService.getPostsObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Post>>() {
                     @Override
                     public void onNext(List<Post> newPosts) {
